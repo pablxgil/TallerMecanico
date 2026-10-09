@@ -34,3 +34,34 @@ class Customer(Base):
     phone: Mapped[str] = mapped_column(String(25), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
+
+class RoleDefinition(Base):
+    __tablename__ = "role_definitions"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(60), unique=True, nullable=False)
+    description: Mapped[str | None] = mapped_column(String(250))
+    status: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+
+
+class Workshop(Base):
+    __tablename__ = "workshops"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(160), unique=True, nullable=False)
+    rfc: Mapped[str] = mapped_column(String(13), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(String(254), nullable=False)
+    street_number: Mapped[str] = mapped_column(String(180), nullable=False)
+    neighborhood: Mapped[str] = mapped_column(String(100), nullable=False)
+    postal_code: Mapped[str] = mapped_column(String(5), nullable=False)
+    state: Mapped[str] = mapped_column(String(80), nullable=False)
+    municipality: Mapped[str] = mapped_column(String(100), nullable=False)
+    photo_url: Mapped[str | None] = mapped_column(String(500))
+
+
+class PasswordResetToken(Base):
+    __tablename__ = "password_reset_tokens"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    token_hash: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+

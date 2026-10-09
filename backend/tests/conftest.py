@@ -14,6 +14,8 @@ engine = create_engine("sqlite://", connect_args={"check_same_thread": False}, p
 
 @pytest.fixture()
 def client():
+    if not str(engine.url).startswith("sqlite"):
+        raise RuntimeError("Las pruebas solo pueden ejecutarse con una base de datos SQLite aislada.")
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     from sqlalchemy.orm import sessionmaker

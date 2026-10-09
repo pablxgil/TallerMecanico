@@ -8,6 +8,7 @@ from app.models import Role, User
 from app.routers.auth import router as auth_router
 from app.routers.users import router as users_router
 from app.routers.customers import router as customers_router
+from app.routers.administration import router as administration_router
 from app.security import hash_password
 
 settings = get_settings()
@@ -32,6 +33,7 @@ app.add_middleware(CORSMiddleware, allow_origins=settings.cors_origins, allow_cr
 app.include_router(auth_router, prefix="/api/v1")
 app.include_router(users_router, prefix="/api/v1")
 app.include_router(customers_router, prefix="/api/v1")
+app.include_router(administration_router, prefix="/api/v1")
 
 
 @app.get("/health")

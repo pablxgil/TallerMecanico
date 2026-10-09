@@ -56,6 +56,31 @@ class EntityResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
 
+class RoleDefinitionRequest(BaseModel):
+    name: str = Field(min_length=3, max_length=60)
+    description: str | None = Field(default=None, max_length=250)
+
+class RoleStatusRequest(BaseModel):
+    status: bool
+
+class WorkshopRequest(BaseModel):
+    name: str = Field(min_length=3, max_length=160)
+    rfc: str = Field(min_length=12, max_length=13, pattern=r"^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$")
+    email: EmailStr
+    street_number: str = Field(min_length=3, max_length=180)
+    neighborhood: str = Field(min_length=2, max_length=100)
+    postal_code: str = Field(pattern=r"^\d{5}$")
+    state: str = Field(min_length=2, max_length=80)
+    municipality: str = Field(min_length=2, max_length=100)
+    photo_url: str | None = Field(default=None, max_length=500)
+
+class PasswordResetRequest(BaseModel):
+    email: EmailStr
+
+class PasswordResetConfirm(BaseModel):
+    token: str = Field(min_length=20, max_length=200)
+    new_password: str = Field(min_length=10, max_length=128)
+
 
 class UserResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)

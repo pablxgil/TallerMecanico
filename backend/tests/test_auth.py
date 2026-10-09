@@ -13,7 +13,7 @@ def test_register_and_login(client):
     response = login(client)
     assert response.status_code == 200
     assert response.json()["access_token"]
-    assert response.json()["user"]["role"] == "cliente"
+    assert response.json()["user"]["role"] == "usuario"
 
 
 def test_reject_duplicate_email(client):

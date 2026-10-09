@@ -16,11 +16,12 @@ Backend:
 
 ```powershell
 cd backend
-python -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
+# Primera vez: instala uv desde https://docs.astral.sh/uv/getting-started/installation/
+uv sync
+uv run uvicorn app.main:app --reload --port 8000
 ```
+
+`uv.lock` fija las dependencias del backend. Para actualizarlas de forma intencional, edite `backend/pyproject.toml` y ejecute `uv lock`; para sincronizar el entorno, ejecute `uv sync`.
 
 Frontend:
 
